@@ -21,6 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -41,15 +42,17 @@ public class MainActivityFragment extends Fragment {
     final private String VALUE_DAYS ="7";
     final private String VALUE_APPID ="44db6a862fba0b067b1930da0d769e98";
 
+    private ArrayAdapter<String> adapter;
+    private ListView listView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        ArrayList<String> data = populateFakeData();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, data);
+        adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, populateFakeData());
 
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(adapter);
 
         return rootView;
@@ -57,21 +60,17 @@ public class MainActivityFragment extends Fragment {
 
     private ArrayList<String> populateFakeData() {
         ArrayList<String> data = new ArrayList<>();
-        data.add("Today - Sunny - 88/63");
-        data.add("Tomorrow - Sunny - 88/63");
-        data.add("Wed - Sunny - 88/63");
-        data.add("Thurs - Sunny - 88/63");
-        data.add("Fri - Sunny - 88/63");
-        data.add("Sat - Sunny - 88/63");
-        data.add("Sun - Sunny - 88/63");
+        for (int i = 0; i < 50; i++) {
+            data.add("FAKE DATA " + i);
+        }
         return data;
     }
 
     // snippet of code taken and modified from https://gist.github.com/anonymous/1c04bf2423579e9d2dcd
-    private class FetchDataTask extends AsyncTask<String, Void, String[]>{
+    private class FetchDataTask extends AsyncTask<String, Void, List<String>>{
 
         @Override
-        protected String[] doInBackground(String... params) {
+        protected List<String> doInBackground(String... params) {
 
             // early return on no params
             if (params.length == 0) {
@@ -97,11 +96,21 @@ public class MainActivityFragment extends Fragment {
                 return null;
             }
 
+            List<String> dataList = new ArrayList<>();
+
             for (int i = 0; i < data.length; i++) {
-                System.out.println(data[i]);
+                dataList.add(data[i]);
             }
 
-            return data;
+            return dataList;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> strings) {
+            if (strings != null) {
+                adapter.clear();
+                adapter.addAll(strings);
+            }
         }
     }
 
