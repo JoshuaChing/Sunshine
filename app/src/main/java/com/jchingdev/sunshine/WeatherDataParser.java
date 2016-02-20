@@ -1,7 +1,6 @@
 package com.jchingdev.sunshine;
 
 import android.text.format.Time;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,8 +13,6 @@ import java.text.SimpleDateFormat;
  */
 public class WeatherDataParser {
 
-    private final String LOG_TAG = WeatherDataParser.class.getSimpleName();
-
     public static double getMaxTemperature(String jsonString, int dayIndex) throws JSONException{
         JSONObject json = new JSONObject(jsonString);
         json = json.getJSONArray("list").getJSONObject(dayIndex).getJSONObject("temp");
@@ -27,7 +24,7 @@ public class WeatherDataParser {
     /** The date/time conversion code is going to be moved outside the asynctask later,
      * so for convenience we're breaking it out into its own method now
      */
-    private String getReadableDateString(long time){
+    public static String getReadableDateString(long time){
         // Because the API returns a unix timestamp (measured in seconds),
         // it must be converted to milliseconds in order to be converted to valid date.
         SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
@@ -37,7 +34,7 @@ public class WeatherDataParser {
     /**
      * Prepare the weather high/lows for presentation.
      */
-    private String formatHighLows(double high, double low) {
+    public static String formatHighLows(double high, double low) {
         // For presentation, assume the user doesn't care about tenths of a degree.
         long roundedHigh = Math.round(high);
         long roundedLow = Math.round(low);
@@ -53,7 +50,7 @@ public class WeatherDataParser {
      * Fortunately parsing is easy:  constructor takes the JSON string and converts it
      * into an Object hierarchy for us.
      */
-    private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays) throws JSONException {
+    public static String[] getWeatherDataFromJson(String forecastJsonStr, int numDays) throws JSONException {
 
         // These are the names of the JSON objects that need to be extracted.
         final String OWM_LIST = "list";
@@ -115,9 +112,6 @@ public class WeatherDataParser {
             resultStrs[i] = day + " - " + description + " - " + highAndLow;
         }
 
-        for (String s : resultStrs) {
-            Log.v(LOG_TAG, "Forecast entry: " + s);
-        }
         return resultStrs;
 
     }

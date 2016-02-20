@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,10 +68,10 @@ public class MainActivityFragment extends Fragment {
     }
 
     // snippet of code taken and modified from https://gist.github.com/anonymous/1c04bf2423579e9d2dcd
-    private class FetchDataTask extends AsyncTask<String, Void, Void>{
+    private class FetchDataTask extends AsyncTask<String, Void, String[]>{
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected String[] doInBackground(String... params) {
 
             // early return on no params
             if (params.length == 0) {
@@ -83,8 +85,23 @@ public class MainActivityFragment extends Fragment {
                 return null;
             }
 
-            System.out.println(json);
-            return null;
+            String[] data = null;
+            try {
+                data = WeatherDataParser.getWeatherDataFromJson(json, 7);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            // early return if data is null
+            if (data == null) {
+                return null;
+            }
+
+            for (int i = 0; i < data.length; i++) {
+                System.out.println(data[i]);
+            }
+
+            return data;
         }
     }
 
