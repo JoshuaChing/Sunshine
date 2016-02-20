@@ -11,6 +11,8 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    final private String POSTAL_CODE = "94043";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_refresh) {
             MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
-            fragment.fetchWeatherData();
+            fragment.fetchWeatherData(POSTAL_CODE);
         }
 
         return super.onOptionsItemSelected(item);
