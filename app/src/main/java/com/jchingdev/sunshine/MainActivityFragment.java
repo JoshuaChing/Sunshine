@@ -46,22 +46,20 @@ public class MainActivityFragment extends Fragment {
 
     private ArrayAdapter<String> adapter;
     private ListView listView;
-    private List<String> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        list = populateFakeData();
-        adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, list);
+        adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, populateFakeData());
 
         listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), list.get(position),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), adapter.getItem(position),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -123,8 +121,7 @@ public class MainActivityFragment extends Fragment {
         protected void onPostExecute(List<String> strings) {
             if (strings != null) {
                 adapter.clear();
-                list = strings;
-                adapter.addAll(list);
+                adapter.addAll(strings);
             }
         }
     }
