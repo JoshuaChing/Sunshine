@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -44,16 +46,24 @@ public class MainActivityFragment extends Fragment {
 
     private ArrayAdapter<String> adapter;
     private ListView listView;
+    private List<String> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, populateFakeData());
+        list = populateFakeData();
+        adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, list);
 
         listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), list.get(position),Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return rootView;
     }
@@ -64,6 +74,10 @@ public class MainActivityFragment extends Fragment {
             data.add("FAKE DATA " + i);
         }
         return data;
+    }
+
+    public void fetchWeatherData(String location) {
+        new FetchDataTask().execute(location);
     }
 
     // snippet of code taken and modified from https://gist.github.com/anonymous/1c04bf2423579e9d2dcd
@@ -109,13 +123,10 @@ public class MainActivityFragment extends Fragment {
         protected void onPostExecute(List<String> strings) {
             if (strings != null) {
                 adapter.clear();
-                adapter.addAll(strings);
+                list = strings;
+                adapter.addAll(list);
             }
         }
-    }
-
-    public void fetchWeatherData(String location) {
-        new FetchDataTask().execute(location);
     }
 
     private String getJsonFromUrl(String location) {
