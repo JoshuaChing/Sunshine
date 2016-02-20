@@ -53,9 +53,9 @@ public class MainActivityFragment extends Fragment {
         return data;
     }
 
-    private class FetchData extends AsyncTask<Void, Void, Void>{
+    private class FetchDataTask extends AsyncTask<Void, Void, Void>{
 
-        private final String LOG_TAG = FetchData.class.getSimpleName();
+        private final String LOG_TAG = FetchDataTask.class.getSimpleName();
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -71,7 +71,7 @@ public class MainActivityFragment extends Fragment {
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are available at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
-                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
+                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7&appid=44db6a862fba0b067b1930da0d769e98");
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -101,10 +101,10 @@ public class MainActivityFragment extends Fragment {
                 }
                 forecastJsonStr = buffer.toString();
             } catch (MalformedURLException e) {
-                Log.e(LOG_TAG, "Error ", e);
+                Log.e(LOG_TAG, "Error MalformedURLException: " + e.toString(), e);
                 return null;
             } catch (IOException e) {
-                Log.e(LOG_TAG, "Error ", e);
+                Log.e(LOG_TAG, "Error IOException: " + e.toString(), e);
                 // If the code didn't successfully get the weather data, there's no point in attempting
                 // to parse it.
                 return null;
@@ -120,7 +120,12 @@ public class MainActivityFragment extends Fragment {
                     }
                 }
             }
+            Log.v(LOG_TAG, forecastJsonStr);
             return null;
         }
+    }
+
+    public void fetchWeatherData() {
+        new FetchDataTask().execute();
     }
 }

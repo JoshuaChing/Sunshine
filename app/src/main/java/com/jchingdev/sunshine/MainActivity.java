@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_refresh) {
+            MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+            fragment.fetchWeatherData();
         }
 
         return super.onOptionsItemSelected(item);
