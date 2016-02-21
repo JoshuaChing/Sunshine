@@ -1,5 +1,6 @@
 package com.jchingdev.sunshine;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -59,7 +59,10 @@ public class MainActivityFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), adapter.getItem(position),Toast.LENGTH_SHORT).show();
+                String text = adapter.getItem(position);
+                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, text);
+                startActivity(intent);
             }
         });
 
