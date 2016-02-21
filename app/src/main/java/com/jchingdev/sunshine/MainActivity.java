@@ -1,7 +1,9 @@
 package com.jchingdev.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-
-    final private String LOCATION_QUERY = "toronto";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        onRefresh();
     }
 
     @Override
@@ -50,10 +56,16 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         } else if (id == R.id.action_refresh) {
-            MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
-            fragment.fetchWeatherData(LOCATION_QUERY);
+            onRefresh();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onRefresh() {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        fragment.fetchWeatherData(pref.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default)));
     }
 }

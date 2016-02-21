@@ -52,7 +52,7 @@ public class MainActivityFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, populateFakeData());
+        adapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, new ArrayList<String>());
 
         listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(adapter);
@@ -67,14 +67,6 @@ public class MainActivityFragment extends Fragment {
         });
 
         return rootView;
-    }
-
-    private ArrayList<String> populateFakeData() {
-        ArrayList<String> data = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            data.add("FAKE DATA " + i);
-        }
-        return data;
     }
 
     public void fetchWeatherData(String location) {
