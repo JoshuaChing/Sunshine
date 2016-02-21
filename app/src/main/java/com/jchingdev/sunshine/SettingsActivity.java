@@ -14,8 +14,9 @@ import android.preference.PreferenceManager;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends PreferenceActivity
-        implements Preference.OnPreferenceChangeListener {
+
+// class snippet taken from https://gist.github.com/udacityandroid/41aca2eb9ff6942e769b
+public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
