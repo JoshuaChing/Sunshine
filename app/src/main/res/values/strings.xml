@@ -8,6 +8,20 @@
     <string name="title_activity_settings">SettingsActivity</string>
 
     <string name="pref_location_key" translatable="false">pref_location_key</string>
-    <string name="pref_location_label">Location Label</string>
+    <string name="pref_location_label">Location</string>
     <string name="pref_location_default" translatable="false">Toronto</string>
+
+    <string name="pref_units_key" translatable="false">pref_units_key</string>
+    <string name="pref_units_label">Temperature Units</string>
+    <string name="pref_units_default" translatable="false">metric</string>
+
+    <string-array name="pref_units_array_alias">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+
+    <string-array name="pref_units_array">
+        <item>metric</item>
+        <item>imperial</item>
+    </string-array>
 </resources>

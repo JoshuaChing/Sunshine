@@ -1,9 +1,11 @@
 package com.jchingdev.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,7 +42,6 @@ public class MainActivityFragment extends Fragment {
     final private String PARAM_APPID ="appid";
 
     final private String VALUE_FORMAT = "json";
-    final private String VALUE_UNITS = "metric";
     final private String VALUE_DAYS ="7";
     final private String VALUE_APPID ="44db6a862fba0b067b1930da0d769e98";
 
@@ -131,10 +132,14 @@ public class MainActivityFragment extends Fragment {
             // Construct the URL for the OpenWeatherMap query
             // Possible parameters are available at OWM's forecast API page, at
             // http://openweathermap.org/API#forecast
+            // sample: http://api.openweathermap.org/data/2.5/forecast/daily?q=toronto&mode=json&units=imperial&cnt=7&appid=44db6a862fba0b067b1930da0d769e98
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String unit = pref.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_default));
+
             Uri uri = Uri.parse(BASE_URL).buildUpon()
                     .appendQueryParameter(PARAM_QUERY, location)
                     .appendQueryParameter(PARAM_FORMAT, VALUE_FORMAT)
-                    .appendQueryParameter(PARAM_UNITS, VALUE_UNITS)
+                    .appendQueryParameter(PARAM_UNITS, unit)
                     .appendQueryParameter(PARAM_DAYS, VALUE_DAYS)
                     .appendQueryParameter(PARAM_APPID, VALUE_APPID)
                     .build();
