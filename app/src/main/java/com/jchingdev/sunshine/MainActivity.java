@@ -2,6 +2,7 @@ package com.jchingdev.sunshine;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -58,14 +59,34 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.action_refresh) {
             onRefresh();
             return true;
+        } else if (id == R.id.action_map) {
+            openPreferenceLocationInMap();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void onRefresh() {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+    private void onRefresh() {
         MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
-        fragment.fetchWeatherData(pref.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default)));
+        fragment.fetchWeatherData(getPreferenceLocation());
+    }
+
+    private void openPreferenceLocationInMap() {
+        Uri geoLocation = Uri.parse("geo:0,0?").buildUpon()
+                .appendQueryParameter("q", getPreferenceLocation())
+                .build();
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    private String getPreferenceLocation() {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        return pref.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
     }
 }
