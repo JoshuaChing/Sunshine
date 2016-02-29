@@ -38,6 +38,7 @@ public class DetailsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_details, menu);
 
         Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, getIntent().getStringExtra(Intent.EXTRA_TEXT));
 
