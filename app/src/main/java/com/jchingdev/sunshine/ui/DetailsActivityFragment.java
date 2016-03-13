@@ -1,4 +1,4 @@
-package com.jchingdev.sunshine;
+package com.jchingdev.sunshine.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.jchingdev.sunshine.R;
 
 /**
  * A placeholder fragment containing a simple view.

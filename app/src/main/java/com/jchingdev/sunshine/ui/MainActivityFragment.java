@@ -1,4 +1,4 @@
-package com.jchingdev.sunshine;
+package com.jchingdev.sunshine.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.jchingdev.sunshine.R;
+import com.jchingdev.sunshine.WeatherDataParser;
 
 import org.json.JSONException;
 
@@ -43,7 +46,7 @@ public class MainActivityFragment extends Fragment {
 
     final private String VALUE_FORMAT = "json";
     final private String VALUE_DAYS ="7";
-    final private String VALUE_APPID ="44db6a862fba0b067b1930da0d769e98";
+    final private String VALUE_APPID ="b1b15e88fa797225412429c1c50c122a";
 
     private ArrayAdapter<String> adapter;
     private ListView listView;

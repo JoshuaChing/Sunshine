@@ -1,4 +1,4 @@
-package com.jchingdev.sunshine;
+package com.jchingdev.sunshine.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.jchingdev.sunshine.R;
 
 
 public class DetailsActivity extends AppCompatActivity {
