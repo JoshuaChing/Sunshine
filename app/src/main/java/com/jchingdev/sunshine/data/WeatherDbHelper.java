@@ -36,7 +36,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_LOCATION_TABLE = "CREATE TABLE " + WeatherContract.LocationEntry.TABLE_NAME + " (" +
                 WeatherContract.LocationEntry._ID + " INTEGER PRIMARY KEY, " +
-                WeatherContract.LocationEntry.COLUMN_LOCATION_SETTINGS + " TEXT UNIQUE NOT NULL, " +
+                WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING + " TEXT UNIQUE NOT NULL, " +
                 WeatherContract.LocationEntry.COLUMN_CITY_NAME + " TEXT NOT NULL, " +
                 WeatherContract.LocationEntry.COLUMN_COORD_LAT + " REAL NOT NULL, " +
                 WeatherContract.LocationEntry.COLUMN_COORD_LONG + " REAL NOT NULL " +

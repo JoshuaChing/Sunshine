@@ -37,7 +37,7 @@ public class WeatherContract {
 
         public static final String TABLE_NAME = "location";
 
-        public static final String COLUMN_LOCATION_SETTINGS = "location_settings";
+        public static final String COLUMN_LOCATION_SETTING = "location_settings";
         public static final String COLUMN_CITY_NAME = "city_name";
         public static final String COLUMN_COORD_LAT = "coord_lat";
         public static final String COLUMN_COORD_LONG = "coord_long";
@@ -85,7 +85,7 @@ public class WeatherContract {
             return CONTENT_URI.buildUpon().appendPath(locationSetting).appendPath(Long.toString(normalizeDate(date))).build();
         }
 
-        public static String getLocationSettingsFromUri(Uri uri) {
+        public static String getLocationSettingFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
 
